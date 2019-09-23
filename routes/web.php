@@ -34,4 +34,4 @@ Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->na
 Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 //登陆用户路由
-Route::resource('users', 'UsersController', ['only' => 'show', 'update', 'edit']);
+Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit']]);
