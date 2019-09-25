@@ -14,6 +14,12 @@ class TopicObserver
         //
     }
 
+    public function created(Topic $topic)
+    {
+        $topic->excerpt = make_excerpt($topic->body);
+        $topic->save();
+    }
+
     public function updating(Topic $topic)
     {
         //
