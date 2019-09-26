@@ -84,13 +84,35 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     //替代上面消息通知文案，更优解
     public function topicNotify($instance)
-        {
-            // 如果要通知的人是当前用户，就不必通知了！
-            if ($this->id == Auth::id()) {
-                return;
-            }
-            $this->increment('notification_count');
-            $this->notify($instance);
+    {
+        // 如果要通知的人是当前用户，就不必通知了！
+        if ($this->id == Auth::id()) {
+            return;
         }
+        $this->increment('notification_count');
+        $this->notify($instance);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if(strlen($value) != 60)
+        {
+            $value = bcrypt($value);
+        }
+
+        $this->attributes['password'] = $value;
+    }
+
+    public function setAvatarAttribute($path)
+    {
+        // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
+        if ( ! \Str::startsWith($path, 'http')) {
+
+            // 拼接完整的 URL
+            $path = config('app.url') . "/upload/image/avatars/$path";
+        }
+
+        $this->attributes['avatar'] = $path;
+    }
 
 }
