@@ -15,7 +15,7 @@ class RepliesTableSeeder extends Seeder
 
     	$faker = app(Faker\Generator::class);
 
-        $replies = factory(Reply::class)->times(50)->make()->each(function ($reply, $index) use ($faker, $user_ids, $topic_ids) {
+        $replies = factory(Reply::class)->times(1000)->make()->each(function ($reply, $index) use ($faker, $user_ids, $topic_ids) {
 
                 $reply->user_id = $faker->randomElement($user_ids);
                 $reply->topic_id = $faker->randomElement($topic_ids);
